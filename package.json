@@ -1,12 +1,13 @@
 {
-  "name": "node-firebird-drivers",
-  "description": "node-firebird-drivers",
+  "name": "node-fb-dvr-fixed",
+  "description": "node-fb-dvr-fixed",
   "private": true,
-  "author": "Adriano dos Santos Fernandes",
+  "author": "Mario R. Carro",
   "license": "MIT",
   "workspaces": [
     "packages/*"
   ],
+  "version": "1.0.0",
   "scripts": {
     "bootstrap": "lerna run build && lerna run gyp:configure && lerna run gyp:build",
     "clean": "lerna run clean",
