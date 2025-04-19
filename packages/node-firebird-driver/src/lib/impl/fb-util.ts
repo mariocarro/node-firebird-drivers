@@ -562,7 +562,7 @@ export function createDataWriter(descriptors: Descriptor[]): DataWriter {
           break;
 
         case sqlTypes.SQL_TYPE_TIME: {
-          const date = value as Date;
+          const date = typeof value === 'string' ? new Date(`2000/01/01 ${value}`) : value as Date;
           dataView.setUint32(
             descriptor.offset,
             encodeTime(date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds() * 10),
@@ -573,7 +573,9 @@ export function createDataWriter(descriptors: Descriptor[]): DataWriter {
 
         case sqlTypes.SQL_TIME_TZ:
         case sqlTypes.SQL_TIME_TZ_EX: {
-          const zonedDate = value as ZonedDate;
+          const zonedDate = typeof value === 'string'
+            ? {date: new Date(`2000/01/01 ${value}`), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }
+            : value as ZonedDate;
           dataView.setUint32(
             descriptor.offset,
             encodeTime(
@@ -589,7 +591,7 @@ export function createDataWriter(descriptors: Descriptor[]): DataWriter {
         }
 
         case sqlTypes.SQL_TYPE_DATE: {
-          const date = value as Date;
+          const date = typeof value === 'string' ? new Date(value) : value as Date;
           dataView.setInt32(
             descriptor.offset,
             encodeDate(date.getFullYear(), date.getMonth() + 1, date.getDate()),
@@ -599,7 +601,7 @@ export function createDataWriter(descriptors: Descriptor[]): DataWriter {
         }
 
         case sqlTypes.SQL_TIMESTAMP: {
-          const date = value as Date;
+          const date = typeof value === 'string' ? new Date(value) : value as Date;
           dataView.setInt32(
             descriptor.offset,
             encodeDate(date.getFullYear(), date.getMonth() + 1, date.getDate()),
@@ -615,7 +617,9 @@ export function createDataWriter(descriptors: Descriptor[]): DataWriter {
 
         case sqlTypes.SQL_TIMESTAMP_TZ:
         case sqlTypes.SQL_TIMESTAMP_TZ_EX: {
-          const zonedDate = value as ZonedDate;
+          const zonedDate = typeof value === 'string'
+            ? { date: new Date(value), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }
+            : value as ZonedDate;
           dataView.setInt32(
             descriptor.offset,
             encodeDate(zonedDate.date.getUTCFullYear(), zonedDate.date.getUTCMonth() + 1, zonedDate.date.getUTCDate()),
