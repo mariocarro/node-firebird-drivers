@@ -1,3 +1,5 @@
+This is a fork of node-firebird-driver with a fix for issue #158 integrated.
+
 [![CI](https://github.com/asfernandes/node-firebird-drivers/workflows/CI/badge.svg)](https://github.com/asfernandes/node-firebird-drivers/actions?query=workflow%3ACI)
 
 # Firebird drivers for Node.js / TypeScript
